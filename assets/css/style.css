@@ -1,0 +1,16 @@
+/* apply styles to <header> */
+
+
+
+.header {
+    padding: 15px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: DarkSlateBlue;
+    
+}
+  
+  header h2 {
+    color: white;
+    text-align: center;
+    font-size: 35px;
+    }
