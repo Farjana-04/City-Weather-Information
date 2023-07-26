@@ -22,7 +22,7 @@
       padding: 0;
     }
     
-    .container {
+    /* .container {
       max-width: 600px;
       margin: 20px auto;
       padding: 20px;
@@ -30,18 +30,18 @@
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       display: flex; /* Display children elements in a flexbox */
-      flex-direction: column; /* Stack children elements vertically */
-      align-items: flex-start; /* Align children elements to the left side */
-    }
-    
-    .search-container {
+      /* flex-direction: column; /* Stack children elements vertically */
+      /* align-items: flex-start; /* Align children elements to the left side */
+    /* }  */
+     
+    /* .search-container {
       display: flex;
       justify-content: flex-start;   /* justify-content: flex-start;   */
-      align-items: center;  
+      /* align-items: center;  
       margin-bottom: 20px;
-    }
-    
-    #search-input {
+    } */
+     
+    /* #search-input {
       padding: 8px;
       width: 200px;
       border: 1px solid #ccc;
@@ -55,9 +55,9 @@
       border: none;
       border-radius: 0 5px 5px 0;
       cursor: pointer;
-    }
+    } */
     
-    .weather-container {
+    /* .weather-container {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-gap: 10px;
@@ -69,6 +69,6 @@
       background-color: #f0f0f0;
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
+    } */
     
     /* Add additional styles as needed for the weather information */

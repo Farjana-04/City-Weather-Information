@@ -26,31 +26,39 @@
         <header class="header">
             <h2>Weather Dashboard</h2>
         </header>
-        <div class="container">
-          <!-- <h1>Weather Dashboard</h1> -->
+        <!-- <div class="container">
           <div class="search-container">
             <input  id="search-input" type="text" placeholder="Enter city name">
             <button id="search-btn">Search</button>
-          </div>
+          </div> -->
+          <div class="search">
+            <div class="search-option" id="sidebar">
+                <h6 id="search-header">Search for a City:</h6>
+                <input id="search-input" type="text" placeholder="city name">
+                <button id="search-btn">search</button>
 
- <!-- <div>
-  <input id="search-input" type="text" placeholder="city name"> 
-  <button id = "search-btn">search</button>
- </div> -->
+            </div>
+        </div>
+
+          <div class="weather-info">
+            <h3 id="city-name">City Name:</h3>
+            <p>Temperature: <span id="temperature">Temperature:</span>105°F</p>
+            <p>Humidity: <span id="humidity">Humidity:</span>28%</p>
+            <img class="weather-icon" id="weather-icon" src="./assets/clear.png" alt="Weather Icon">
+        </div>
+
+        <h1>5-Day Weather Forecast</h1>
+        <div id="weather-container">
+          <!-- Weather forecast data will be dynamically added here using JavaScript -->
+        </div>
 
  <div class="weather-container">
   <!-- Weather information will be displayed here -->
 </div>
 </div>
 
- <!-- Example of a a present time block. The "present" class adds a red background color. -->
- <!-- <div id="day-1" class="day-block">
-  <div class="col-2 col-md-1 hour text-center py-3">10AM</div>
-  <textarea class="col-8 col-md-10 description" rows="3"> </textarea>
-  <button class="btn saveBtn col-2 col-md-1" aria-label="save">
-    <i class="fas fa-save" aria-hidden="true"></i>
-  </button>
-</div> -->
+ 
+ 
 
 
 

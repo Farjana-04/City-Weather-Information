@@ -28,26 +28,42 @@ searchBtnEl.on("click", searchHandle)
 
 function processData(data){
     
- let weatherArray = data.list
+ let weatherArray = data.list;
+ let weatherDataToSave = [];
  
- for(let i=0; i<5; i++){
-    console.log(weatherArray[i*8])
-    let date = new Date(weatherData.dt * 1000);
-    let temperature = Math.round(weatherData.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
-    let description = weatherData.weather[0].description;
-    let icon = weatherData.weather[0].icon;
+for (let i = 0; i < 5; i++) {
+   let weatherData = weatherArray[i * 8]; // Access weather data for each day
+   console.log(weatherData);
+   let date = new Date(weatherData.dt * 1000);
+   let temperature = Math.round(weatherData.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+   let description = weatherData.weather[0].description;
+   let icon = weatherData.weather[0].icon;
 
-   //  let weatherCard = `
-   //    <div class="weather-card">
-   //      <p>Date: ${date.toDateString()}</p>
-   //      <p>Temperature: ${temperature}°C</p>
-   //      <p>Description: ${description}</p>
-   //      <img src="http://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
-   //    </div>
-   //  `;
-
-    weatherContainer.append(weatherCard);
+//Save data to an object and add it to the array
+let weatherObject = {
+   date: date.toISOString(),
+   temperature: temperature,
+   description: description,
+   icon: icon
+}
+weatherDataToSave.push(weatherObject);
+   }
+  //Save the weather data array to local storage
+  localStorage.setItem("weatherData", JSON.stringify(weatherDataToSave))
   }
+//Get the data from local store to retrieve the saved weather data
+function getWeatherDataFromLocalStorage(){
+   let storedData = localStorage.getItem("weatherData")
+   if (storedData){
+      let weatherDataArray = JSON.parse(storedData)
+      console.log(weatherDataArray);
+      return weatherDataArray;
+   }else{
+      console.log("No weather data found in local storage")
+      return []
+
+   
+    }
 }
  
 
@@ -57,20 +73,3 @@ function processData(data){
 
 
 
-//Getting and displaying the text for the upcoming five days of the week
-// var d = new Date();
-// var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",];
-
-//Function to get the correct integer for the index of the days array
-// function CheckDay(day){
-//     if(day + d.getDay() > 6){
-//         return day + d.getDay() - 7;
-//     }
-//     else{
-//         return day + d.getDay();
-//     }
-// }
-
-//     for(i = 0; i<5; i++){
-//         document.getElementById("day" + (i+1)).innerHTML = weekday[CheckDay(i)];
-//     }
