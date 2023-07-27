@@ -14,16 +14,16 @@ header h2 {
 }
 
 /* General styles for the #weather-information div */
-/* #weather-information {
+#weather-information {
   width: 300px;
   border: 2px solid #ccc;
   padding: 30px;
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
-} */
+}
 
 /* Style for the <h2> element inside the #weather-information div */
-/* #weather-information h2 {
+#weather-information h2 {
   font-size: 24px;
   margin-bottom: 10px;
 }
@@ -54,7 +54,7 @@ header h2 {
   background-color: #f5f5f5;
   display: flex;
   flex-wrap: wrap;
-} */
+}
 
 /* Styling for the heading "5 Days Forecast" */
 #weather-forecast h5 {
