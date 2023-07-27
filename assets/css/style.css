@@ -1,74 +1,136 @@
 /* apply styles to <header> */
 
-
-
 .header {
-    padding: 15px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: DarkSlateBlue;
-    
-}
-  
-  header h2 {
-    color: white;
-    text-align: center;
-    font-size: 35px;
-    }
+  padding: 15px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: DarkSlateBlue;
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    
-    /* .container {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      display: flex; /* Display children elements in a flexbox */
-      /* flex-direction: column; /* Stack children elements vertically */
-      /* align-items: flex-start; /* Align children elements to the left side */
-    /* }  */
-     
-    /* .search-container {
-      display: flex;
-      justify-content: flex-start;   /* justify-content: flex-start;   */
-      /* align-items: center;  
-      margin-bottom: 20px;
-    } */
-     
-    /* #search-input {
-      padding: 8px;
-      width: 200px;
-      border: 1px solid #ccc;
-      border-radius: 5px 0 0 5px;
-    }
-    
-    #search-btn {
-      padding: 8px 12px;
-      background-color: #007bff;
-      color: #ffffff;
-      border: none;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
-    } */
-    
-    /* .weather-container {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-gap: 10px;
-      justify-content: flex-start;
-    }
-    
-    .weather-card {
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    } */
-    
-    /* Add additional styles as needed for the weather information */
+}
+
+header h2 {
+  color: white;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* General styles for the #weather-information div */
+/* #weather-information {
+  width: 300px;
+  border: 2px solid #ccc;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+} */
+
+/* Style for the <h2> element inside the #weather-information div */
+/* #weather-information h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+
+#search-input {
+  padding: 5px;
+  margin-right: 10px;
+}
+
+#search-btn {
+  padding: 5px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#weather-information {
+  margin-top: 30px;
+  width: 300px;
+  padding: 30px;
+}
+
+#weather-forecast {
+  margin: 20px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+/* Styling for the heading "5 Days Forecast" */
+#weather-forecast h5 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.forecast-day {
+  font-size: 15px;
+  /* font-weight: ; */
+  margin-bottom: 5px;
+}
+
+/* Styling for the container with id "days-history" */
+#weather-forecast {
+  margin: 20px;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+/* Styling for the heading "5 Days Forecast" */
+#weather-forecast h5 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Styling for the cards inside the row */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Styling for each column inside the row */
+.col-sm {
+  flex: 1;
+  margin: 10px;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+/* Styling for the cards */
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the card title */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Styling for the temperature and humidity paragraphs */
+.card p {
+  margin: 5px 0;
+}
+
+/* Styling for the "High" and "Low" paragraphs */
+#temphigh,
+#templow {
+  font-weight: bold;
+}
+
+/* Styling for the "Humidity" paragraph */
+#humity {
+  font-style: italic;
+}
+
+/* Additional styling for the cards with class "five-cards" */
+.five-cards {
+  background-color: #f9f9f9;
+}
