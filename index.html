@@ -28,22 +28,25 @@
       </div>
     </div>
 
-    <div class="weather-information"> 
-            <p>City Name: <span id="city-name"></span></p>
-            <p>Date: <span id="date"></span></p>
-            <p>Temperature: <span id ="temperature"></span>105°F</p>
-            <p> Wind Speed: <span id ="wind"></span></p>
-            <p>Humidity: <span id="humidity"></span>28%</p>
-            <p>Icon: <span id="icon"><img src="./assets/clear.png" alt="Icon Image"></span></p>
-            
-        </div> 
+    <div id="weather-information">
+      <h2>Current Weather</h2>
+      <p id="city-name">City: </p>
+      <p id="date">Date:</p>
+      <p id="temperature">Temperature:</p>
+      <p id="humidity"></p>
+      <p id="wind-speed"></p>
+
+  </div>
+    <ul id="search-history"></ul>
+  </div>
+
 
     <div id="weather-forecast">
       <h5>5 Days Forecast</h5>
       <div class="row">
         <div class="col-sm">
           <div class="card  five-cards">
-            <!-- id's are numbered 0-4 to make loop easier, see script.js -->
+
             <div class="card-title" id="day0">Date: 8/1/2023</div>
             <p id="temphigh">High:</p>
             <p id="templow">Low:</p>
@@ -87,9 +90,7 @@
 
     </div>
 
-    <ul id="search-history"></ul>
-    <button id="clear-history-btn">Clear History</button>
-    </div>
+
 
 
 

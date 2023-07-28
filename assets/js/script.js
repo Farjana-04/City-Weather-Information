@@ -1,93 +1,106 @@
 
 
-//start creating the variables
-let searchBtnEl = $("#search-btn");
+// Start creating the variables
+let searchBtnEl = $("#search-btn")
 let searchInputEl = $("#search-input");
-let presentWeatherEl = $("#weather-information");
-let weatherForecastEl = $("#days-history");
+let presentWeatherEl = $("#weather-information")
+let weatherForecastEl = $("#days-history")
 
-const API_KEY = "f6db0a47aab47705d7072b6b5344e991";
+const API_KEY = "f6db0a47aab47705d7072b6b5344e991"; 
 let searchHistory = [];
 
+// Check if there is a previously searched city in localStorage
+let previousCity = localStorage.getItem("searchCity");
+if (previousCity) {
+  searchInputEl.val(previousCity);
+  searchHandle(); // Trigger the search for the previous city
+}
+
 function searchHandle() {
-  let cityName = searchInputEl.val();
+  let cityName = searchInputEl.val()
 
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&days=5`;
-  // console.log(url)
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      processData(data);
-    })
+      // Process the current weather data
+      displayCurrentWeather(data);
 
+      // Add the city to the search history
+      addToSearchHistory(cityName)
+
+      // Fetch the 5-day forecast
+      return fetchForecast(cityName)
+    })
+    .then(function (forecastData) {
+      // Process the 5-day forecast data
+      displayForecast(forecastData)
+    });
 }
+
 searchBtnEl.on("click", searchHandle);
 
-function processData(data) {
-  // Current weather data
-  let weatherArray = data.list;
+function displayCurrentWeather(data) {
   let cityName = data.name;
-  //  let weatherDataToSave = [];
+  let date = new Date(data.dt * 1000);
+  let temperature = Math.round(data.main.temp - 273.15);
+  let humidity = data.main.humidity;
+  let windSpeed = data.wind.speed;
+  let icon = data.weather[0].icon;
 
-  for (let i = 0; i < 5; i++) {
-    let thisCard = document.querySelector("#day" + i)
-    let weatherData = weatherArray[i * 8];
-    console.log(weatherData);
-    let date = new Date(weatherData.dt * 1000);
-    let temperature = Math.round(weatherData.main.temp - 273.15);
-    let humidity = weatherData.main.humidity;
-    let icon = weatherData.weather[0].icon;
-    
-
-    thisCard.childNodes[1].innerHTML = temperature;
-
-  // Display weather icon using OpenWeatherMap's icons
-    let iconUrl = `http://openweathermap.org/img/w/${icon}.png`;
-    let iconEl = document.createElement("img");
-    iconEl.setAttribute("src", iconUrl);
-    iconEl.setAttribute("alt", "Weather Icon");
-
-    thisCard.children[0].appendChild(iconEl);
- }
- // Display current weather information
- let currentDate = new Date().toLocaleDateString();
- let currentTemperature = Math.round(data.main.temp - 273.15);
- let currentHumidity = data.main.humidity;
- let currentWindSpeed = data.wind.speed;
- let currentIcon = data.weather[0].icon;
-
-  $("#city-name").text(cityName);
-  $("#date").text(currentDate);
-  $("#temperature").text(currentTemperature);
-  $("#humidity").text(currentHumidity);
-  $("#wind-speed").text(currentWindSpeed);
-
-  let currentIconUrl = `http://openweathermap.org/img/w/${currentIcon}.png`;
-  let currentIconEl = document.createElement("img");
-  currentIconEl.setAttribute("src", currentIconUrl);
-  currentIconEl.setAttribute("alt", "Weather Icon");
-  $("#current-icon").html(currentIconEl);
-
-  // Save the city to search history and update the local storage
-  searchHistory.push(cityName);
-  localStorage.setItem("search", JSON.stringify(searchHistory));
-  updateSearchHistory();
-
+  // Display current weather information on the page
+  presentWeatherEl.html(`
+    <h2>${cityName} (${date.toLocaleDateString()})</h2>
+    <img src="http://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
+    <p>Temperature: ${temperature}°C</p>
+    <p>Humidity: ${humidity}%</p>
+    <p>Wind Speed: ${windSpeed} m/s</p>
+  `);
 }
 
-// Call this function when the "Clear History" button is clicked
- $("#clear-history-btn").on("click", clearSearchHistory);
-
-// On page load, retrieve weather data from local storage if available
-document.addEventListener("DOMContentLoaded", () => {
-  let storedSearchHistory = localStorage.getItem("search");
-  if (storedSearchHistory) {
-    searchHistory = JSON.parse(storedSearchHistory);
-    
+function addToSearchHistory(cityName) {
+  if (!searchHistory.includes(cityName)) {
+    searchHistory.push(cityName)
+    updateSearchHistoryUI()
   }
+}
+
+function updateSearchHistoryUI() {
+  // Clear previous search history UI
+  $("#search-history").empty();
+
+  // Loop through searchHistory and create buttons for each city
+  for (let i = 0; i < searchHistory.length; i++) {
+    $("#search-history").append(`
+      <button class="city-button">${searchHistory[i]}</button>
+    `);
+  }
+}
+
+function fetchForecast(cityName){
+  let url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}`;
+  return fetch(url).then(function (response) {
+    return response.json();
+  });
+}
+function displayForecast(forecastData) {
+  
+}
+
+// Handle click on a city in the search history (assuming you have a list of buttons for each city)
+$(document).on("click", ".city-button", function () {
+  let cityName = $(this).text()
+  searchInputEl.val(cityName) // Set the input value to the selected city
+  searchHandle(); // Trigger the search for the selected city
 })
+// Save the search city to localStorage when the search button is clicked
+$(document).on("click", "#search-btn", function () {
+  let cityName = searchInputEl.val();
+  localStorage.setItem("searchCity", cityName);
+})
+
 
 
 
