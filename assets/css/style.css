@@ -127,7 +127,7 @@ header h2 {
 
 /* Styling for the "Humidity" paragraph */
 #humity {
-  font-style: italic;
+  font-weight: bold;
 }
 
 /* Additional styling for the cards with class "five-cards" */

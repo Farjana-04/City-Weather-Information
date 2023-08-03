@@ -4,42 +4,52 @@
 let searchBtnEl = $("#search-btn")
 let searchInputEl = $("#search-input");
 let presentWeatherEl = $("#weather-information")
-let weatherForecastEl = $("#days-history")
+let weatherForecastEl = $("#weather-forecast")
 
-const API_KEY = "f6db0a47aab47705d7072b6b5344e991"; 
-let searchHistory = [];
+// Initialize the city array that is saved in the local storage.
+let cities = JSON.parse(localStorage.getItem('cities')) || [];
 
-// Check if there is a previously searched city in localStorage
-let previousCity = localStorage.getItem("searchCity");
-if (previousCity) {
-  searchInputEl.val(previousCity);
-  searchHandle(); // Trigger the search for the previous city
-}
+const API_KEY = "f6db0a47aab47705d7072b6b5344e991";
+let searchHistory = cities;
 
 function searchHandle() {
   let cityName = searchInputEl.val()
+  addToSearchHistory(cityName)
+  getWeather(cityName)
 
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&days=5`;
+}
+function getWeather(cityName) {
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       // Process the current weather data
+      console.log(data.coord)
       displayCurrentWeather(data);
-
-      // Add the city to the search history
-      addToSearchHistory(cityName)
-
-      // Fetch the 5-day forecast
-      return fetchForecast(cityName)
+      getFutureweather(data.coord.lat, data.coord.lon)
     })
-    .then(function (forecastData) {
-      // Process the 5-day forecast data
-      displayForecast(forecastData)
-    });
 }
+function getFutureweather(lat, lon) {
+  let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+  fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // Process the current weather data
+      console.log(data.list)
+      // displayFutureWeather(data.list[2])
+      displayFutureWeather(0, data.list[9])
+      displayFutureWeather(1, data.list[17])
+      displayFutureWeather(2, data.list[25])
+      displayFutureWeather(3, data.list[33])
+      displayFutureWeather(4, data.list[39])
 
+    })
+}
+updateSearchHistoryUI();
 searchBtnEl.on("click", searchHandle);
 
 function displayCurrentWeather(data) {
@@ -49,10 +59,9 @@ function displayCurrentWeather(data) {
   let humidity = data.main.humidity;
   let windSpeed = data.wind.speed;
   let icon = data.weather[0].icon;
-
   // Display current weather information on the page
   presentWeatherEl.html(`
-    <h2>${cityName} (${date.toLocaleDateString()})</h2>
+    <h4>${cityName} (${date.toLocaleDateString()})</h4>
     <img src="http://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
     <p>Temperature: ${temperature}°C</p>
     <p>Humidity: ${humidity}%</p>
@@ -63,6 +72,8 @@ function displayCurrentWeather(data) {
 function addToSearchHistory(cityName) {
   if (!searchHistory.includes(cityName)) {
     searchHistory.push(cityName)
+    // City name has been saved to the local storage.
+    localStorage.setItem('cities', JSON.stringify(searchHistory));
     updateSearchHistoryUI()
   }
 }
@@ -73,33 +84,42 @@ function updateSearchHistoryUI() {
 
   // Loop through searchHistory and create buttons for each city
   for (let i = 0; i < searchHistory.length; i++) {
-    $("#search-history").append(`
-      <button class="city-button">${searchHistory[i]}</button>
-    `);
+    let historyBtnEl = $(`<button class="city-button">${searchHistory[i]}</button>`)
+    historyBtnEl.on("click", (e) => {
+
+      getWeather(searchHistory[i])
+    })
+    $("#search-history").append(historyBtnEl);
   }
 }
 
-function fetchForecast(cityName){
-  let url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}`;
-  return fetch(url).then(function (response) {
-    return response.json();
-  });
-}
-function displayForecast(forecastData) {
-  
+function displayFutureWeather(dayIndex, forecast) {
+  console.log(dayIndex, forecast)
+
+  let dayEl = $(`#day${dayIndex}`)
+  //  console.log(dayEl)
+  //   let dateEl = dayEl.children(".card-title")
+
+  // Extract the relevant information for each day
+  let date = new Date(forecast.dt * 1000);
+  let temperature = Math.round(forecast.main.temp - 273.15);
+  let humidity = forecast.main.humidity;
+  let icon = forecast.weather[0].icon;
+  // dateEl.text(date)
+  dayEl.html(`
+    <h4> (${date.toLocaleDateString()})</h4>
+    <img src="http://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
+    <p>Temperature: ${temperature}°C</p>
+    <p>Humidity: ${humidity}%</p>
+    
+  `);
+
+
 }
 
-// Handle click on a city in the search history (assuming you have a list of buttons for each city)
-$(document).on("click", ".city-button", function () {
-  let cityName = $(this).text()
-  searchInputEl.val(cityName) // Set the input value to the selected city
-  searchHandle(); // Trigger the search for the selected city
-})
-// Save the search city to localStorage when the search button is clicked
-$(document).on("click", "#search-btn", function () {
-  let cityName = searchInputEl.val();
-  localStorage.setItem("searchCity", cityName);
-})
+
+
+
 
 
 
