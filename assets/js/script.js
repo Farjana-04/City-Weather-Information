@@ -1,5 +1,3 @@
-
-
 // Start creating the variables
 let searchBtnEl = $("#search-btn")
 let searchInputEl = $("#search-input");
@@ -97,10 +95,8 @@ function displayFutureWeather(dayIndex, forecast) {
   console.log(dayIndex, forecast)
 
   let dayEl = $(`#day${dayIndex}`)
-  //  console.log(dayEl)
-  //   let dateEl = dayEl.children(".card-title")
-
-  // Extract the relevant information for each day
+  
+ // Extract the relevant information for each day
   let date = new Date(forecast.dt * 1000);
   let temperature = Math.round(forecast.main.temp - 273.15);
   let humidity = forecast.main.humidity;
